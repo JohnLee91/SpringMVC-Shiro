@@ -15,8 +15,12 @@ target/
 .metadata
 
 # .gitignore for intellij
-
 *.iml
 *.ipr
 *.iws
 .idea/
+
+# .gitignore文件只对还没有加入版本管理的文件起作用，如果之前已经用git把这些文件纳入了版本库，就不起作用了
+# 如果已经提交，用git rm --cached -r dir 或者git rm --cached file 删除对应文件
+# http://blog.csdn.net/zhangjs0322/article/details/37658669
+# http://blog.csdn.net/ppppfly/article/details/53102756
