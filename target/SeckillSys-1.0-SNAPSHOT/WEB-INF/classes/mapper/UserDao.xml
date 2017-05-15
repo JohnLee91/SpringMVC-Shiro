@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seckill.dao.UserDao">
+    <resultMap id="userResultMap" type="User">
+        <id property="id" column="id" />
+        <result property="organizationId" column="organization_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="roleIdsStr" column="role_ids"/>
+        <result property="locked" column="locked"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ${alias}.id, ${alias}.organization_id, ${alias}.username, ${alias}.password, ${alias}.salt, ${alias}.role_ids, ${alias}.locked
+    </sql>
+
+    <!-- 目的：为DAO接口方法提供sql语句配置 -->
+    <insert id="createUser" parameterType="User">
+        <!-- 具体sql -->
+        INSERT INTO sys_user(organization_id, username, password, salt, role_ids, locked) values
+        (#{organizationId}, #{username}, #{password}, #{salt}, #{roleIdsStr}, #{locked})
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE sys_user SET organization_id=#{organizationId}, username=#{username}, password=#{password},
+        slat=#{salt}, roleIds=#{roleIdsStr}, locked=#{locked}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="long">
+        DELETE FROM sys_user
+        WHERE id=#{userId}
+    </delete>
+
+    <select id="findOne" resultMap="userResultMap" parameterType="long">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
+        FROM sys_user u1
+        WHERE id = #{userId}
+    </select>
+
+    <select id="findAll" resultMap="userResultMap">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
+        FROM sys_user u1
+        ORDER BY id DESC
+    </select>
+
+    <select id="findByUsername" resultMap="userResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
+        FROM sys_user u1
+        WHERE username = #{username}
+    </select>
+</mapper>

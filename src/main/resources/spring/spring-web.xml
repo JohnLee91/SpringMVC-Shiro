@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置SpringMVC -->
+    <!-- 1.开启SpringMVC注解模式 -->
+    <!-- 简化配置：
+        (1)自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter
+        (2)提供一系列：数据绑定，数字和日期格式化 @NumberFormat,@DateTimeFormat, xml，json默认读写支持。 -->
+    <mvc:annotation-driven/>
+
+   <!-- 此处注册了一个@CurrentUser 参数解析器。如之前的 IndexController，从 request 获取
+   shiro sysUser 拦截器放入的当前登录 User 对象。-->
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="org.seckill.util.CurrentUserMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <!-- servlet-mapping 映射路径："/"-->
+    <!-- 2.静态资源默认servlet配置
+        (1)加入对静态资源的处理：js,png
+        (2)允许用"/"做整体映射 -->
+    <mvc:default-servlet-handler/>
+    <!-- 静态资源访问（不拦截此目录下的东西的访问） -->
+    <!--<mvc:resources location="/WEB-INF/static/"  mapping="/WEB-INF/static/**" />-->
+
+    <!-- 3.配置jsp,显示ViewResolver -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 4.扫描web相关的bean -->
+    <context:component-scan base-package="org.seckill.controller"/>
+
+</beans>

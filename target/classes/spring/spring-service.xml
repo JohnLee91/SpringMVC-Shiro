@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 扫描service包下所有使用注解的类型 -->
+    <context:component-scan base-package="org.seckill.service,org.seckill.util">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置基于注解的声明式事务: 默认使用注解来管理事务行为-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--事务管理器配置-->
+
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="*" propagation="REQUIRED"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--<aop:config expose-proxy="true" proxy-target-class="true">-->
+        <!--&lt;!&ndash; 只对业务逻辑层实施事务 &ndash;&gt;-->
+        <!--<aop:pointcut id="txPointcut" expression="execution(* org.seckill..service..*+.*(..))"/>-->
+        <!--<aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>-->
+    <!--</aop:config>-->
+
+    <!--<bean class="com.github.zhangkaitao.shiro.spring.SpringUtils"/>-->
+
+    <!--<import resource="classpath:spring/spring-config-cache.xml"/>-->
+    <!--<import resource="classpath:spring/spring-config-shiro.xml"/>-->
+
+    <bean class="org.seckill.spring.SpringUtils"/>
+    <import resource="spring-dao.xml" />
+</beans>

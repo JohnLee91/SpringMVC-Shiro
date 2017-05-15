@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SeckillSys:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SeckillSys-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="SeckillSys:war exploded" />
+    </root>
+  </artifact>
+</component>
