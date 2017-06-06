@@ -25,7 +25,7 @@
 
     <update id="updateUser" parameterType="User">
         UPDATE sys_user SET organization_id=#{organizationId}, username=#{username}, password=#{password},
-        slat=#{salt}, roleIds=#{roleIdsStr}, locked=#{locked}
+        salt=#{salt}, role_ids=#{roleIdsStr}, locked=#{locked}
         WHERE id=#{id}
     </update>
 
