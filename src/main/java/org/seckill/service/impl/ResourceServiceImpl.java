@@ -3,6 +3,7 @@ package org.seckill.service.impl;
 import org.seckill.dao.ResourceDao;
 import org.seckill.entity.Resource;
 import org.apache.shiro.authz.permission.WildcardPermission;
+import org.seckill.realm.UserRealm;
 import org.seckill.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
     private ResourceDao resourceDao;
+    @Autowired
+    private UserRealm userRealm;
 
     @Override
     public int createResource(Resource resource) {
@@ -31,11 +34,13 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public int updateResource(Resource resource) {
+        userRealm.clearAllCache();
         return resourceDao.updateResource(resource);
     }
 
     @Override
     public int deleteResource(Long resourceId) {
+        userRealm.clearAllCache();
         return resourceDao.deleteResource(resourceId);
     }
 

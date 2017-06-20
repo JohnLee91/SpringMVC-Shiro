@@ -2,6 +2,7 @@ package org.seckill.service.impl;
 
 import org.seckill.dao.RoleDao;
 import org.seckill.entity.Role;
+import org.seckill.realm.UserRealm;
 import org.seckill.service.ResourceService;
 import org.seckill.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,15 @@ public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
     @Autowired
     private ResourceService resourceService;
+    @Autowired
+    private UserRealm userRealm;
 
     public int createRole(Role role) {
         return roleDao.createRole(role);
     }
 
     public int updateRole(Role role) {
+        userRealm.clearAllCache();
         return roleDao.updateRole(role);
     }
 

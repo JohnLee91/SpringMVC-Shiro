@@ -2,6 +2,7 @@ package org.seckill.service.impl;
 
 import org.seckill.dao.UserDao;
 import org.seckill.entity.User;
+import org.seckill.realm.UserRealm;
 import org.seckill.service.RoleService;
 import org.seckill.service.UserService;
 import org.seckill.util.PasswordHelper;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private PasswordHelper passwordHelper;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserRealm userRealm;
 
     /**
      * 创建用户
@@ -40,11 +43,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(User user) {
+        userRealm.clearAllCache();
         return userDao.updateUser(user);
     }
 
     @Override
     public int deleteUser(Long userId) {
+        userRealm.clearAllCache();
         return userDao.deleteUser(userId);
     }
 
