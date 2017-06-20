@@ -16,6 +16,11 @@
     </listener>
     <!-- Spring配置文件结束 -->
 
+    <!-- 可以使用RequestContextHolder.currentRequestAttributes() 获取到请求的attr -->
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
+    <!--</listener>-->
+
     <!-- 设置servlet编码开始 -->
     <filter>
         <filter-name>Set Character Encoding</filter-name>
@@ -61,10 +66,13 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring/spring-*.xml</param-value>
         </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>seckill-dispatcher</servlet-name>
         <!-- 默认匹配所有请求 -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
 </web-app>

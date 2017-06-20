@@ -30,7 +30,7 @@ public class SeckillController {
     @Autowired
     private SeckillService seckillService;
 
-    @RequiresPermissions("seckill:create")
+    //@RequiresPermissions("seckill:create")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         //获取列表页
@@ -40,7 +40,7 @@ public class SeckillController {
         return "seckill/list";//WEB-INFO/jsp/seckill/list.jsp
     }
 
-    @RequiresPermissions("seckill:view")
+    //@RequiresPermissions("seckill:view")
     @RequestMapping(value = "/{seckillId}/detail", method = RequestMethod.GET)
     public String detail(@PathVariable("seckillId") Long seckillId, Model model) {
         if (seckillId == null) {

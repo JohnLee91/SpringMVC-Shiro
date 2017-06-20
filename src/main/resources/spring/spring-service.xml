@@ -47,5 +47,9 @@
     <!--<import resource="classpath:spring/spring-config-shiro.xml"/>-->
 
     <bean class="org.seckill.spring.SpringUtils"/>
+    <!-- 控制器异常处理 -->
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver"/>
+    <bean class="org.seckill.util.DefaultExceptionHandler"/>
+
     <import resource="spring-dao.xml" />
 </beans>

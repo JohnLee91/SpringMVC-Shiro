@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seckill.dao.UrlFilterDao">
+    <resultMap id="urlFilterResultMap" type="UrlFilter">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="roles" column="roles"/>
+        <result property="permissions" column="permissions"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ${alias}.id, ${alias}.name, ${alias}.url, ${alias}.roles, ${alias}.permissions
+    </sql>
+
+    <!-- 目的：为DAO接口方法提供sql语句配置 -->
+    <insert id="createUrlFilter" parameterType="UrlFilter">
+        <!-- 具体sql -->
+        INSERT INTO sys_url_filter(name, url, roles, permissions) values
+        (#{name}, #{url}, #{roles}, #{permissions})
+    </insert>
+
+    <update id="updateUrlFilter" parameterType="UrlFilter">
+        UPDATE sys_url_filter SET name=#{name}, url=#{url}, roles=#{roles}, permissions=#{permissions}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteUrlFilter" parameterType="long">
+        DELETE FROM sys_url_filter
+        WHERE id=#{urlFilterId}
+    </delete>
+
+    <select id="findOne" resultMap="urlFilterResultMap" parameterType="long">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
+        FROM sys_url_filter u1
+        WHERE id = #{urlFilterId}
+    </select>
+
+    <select id="findAll" resultMap="urlFilterResultMap">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
+        FROM sys_url_filter u1
+        ORDER BY id DESC
+    </select>
+
+</mapper>

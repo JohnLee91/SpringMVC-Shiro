@@ -24,11 +24,11 @@
         <!--userRealm 组件禁用掉了 cache，可以参考
         https://github.com/zhangkaitao/es/tree/master/web/src/main/java/com/sishuok/es/extra/aop
         实现自己的 cache 切面；否则需要在修改如资源/角色等信息时清理掉缓存。-->
-        <property name="cachingEnabled" value="false"/>
-        <!--<property name="authenticationCachingEnabled" value="true"/>-->
-        <!--<property name="authenticationCacheName" value="authenticationCache"/>-->
-        <!--<property name="authorizationCachingEnabled" value="true"/>-->
-        <!--<property name="authorizationCacheName" value="authorizationCache"/>-->
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
     </bean>
 
     <!-- 会话ID生成器 -->
@@ -103,24 +103,60 @@
     <!--sysUserFilter用于根据当前登录用户身份获取User信息放入 request；然后就可以通过 request获取 User。-->
     <bean id="sysUserFilter" class="org.seckill.util.SysUserFilter"/>
 
-    <!-- Shiro的Web过滤器 -->
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager"/>
+    <!--filterChainManager 是我们自定义的 CustomDefaultFilterChainManager，注册相应的拦截器及默认的拦截器链。-->
+    <bean id="filterChainManager"
+          class="org.seckill.spring.CustomDefaultFilterChainManager">
         <property name="loginUrl" value="/login"/>
-        <property name="filters">
+        <property name="successUrl" value="/"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <property name="customFilters">
             <util:map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
                 <entry key="sysUser" value-ref="sysUserFilter"/>
             </util:map>
         </property>
-        <property name="filterChainDefinitions">
+        <property name="defaultFilterChainDefinitions">
             <value>
                 /login = authc
                 /logout = logout
-                /authenticated = authc
+                /unauthorized = authc
                 /** = user,sysUser
             </value>
         </property>
+    </bean>
+
+    <!--filterChainResolver 是自定义的 CustomPathMatchingFilterChainResolver，使用上边的filterChainManager 进行拦截器链的管理。-->
+    <bean id="filterChainResolver" class="org.seckill.spring.CustomPathMatchingFilterChainResolver">
+        <property name="customDefaultFilterChainManager" ref="filterChainManager"/>
+    </bean>
+
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+        <!--使用自定义拦截器拦截URL时，注释掉下面部分-->
+        <!--<property name="loginUrl" value="/login"/>-->
+        <!--<property name="filters">-->
+            <!--<util:map>-->
+                <!--<entry key="authc" value-ref="formAuthenticationFilter"/>-->
+                <!--<entry key="sysUser" value-ref="sysUserFilter"/>-->
+            <!--</util:map>-->
+        <!--</property>-->
+        <!--<property name="filterChainDefinitions">-->
+            <!--<value>-->
+                <!--/login = authc-->
+                <!--/logout = logout-->
+                <!--/authenticated = authc-->
+                <!--/** = user,sysUser-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--最后把 filterChainResolver 注册给 shiroFilter，其使用它进行动态 URL 权限控制。-->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="shiroFilter"/>
+        <property name="targetMethod" value="setFilterChainResolver"/>
+        <property name="arguments" ref="filterChainResolver"/>
     </bean>
 
     <!-- Shiro生命周期处理器-->
