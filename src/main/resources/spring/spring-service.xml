@@ -13,10 +13,12 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
     <!-- 扫描service包下所有使用注解的类型 -->
     <context:component-scan base-package="org.seckill.service,org.seckill.util">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+
     </context:component-scan>
+    <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
 
     <!-- 配置事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -41,15 +43,14 @@
         <!--<aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>-->
     <!--</aop:config>-->
 
-    <!--<bean class="com.github.zhangkaitao.shiro.spring.SpringUtils"/>-->
-
     <!--<import resource="classpath:spring/spring-config-cache.xml"/>-->
     <!--<import resource="classpath:spring/spring-config-shiro.xml"/>-->
 
     <bean class="org.seckill.spring.SpringUtils"/>
     <!-- 控制器异常处理 -->
-    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver"/>
-    <bean class="org.seckill.util.DefaultExceptionHandler"/>
+    <!--<bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver"/>-->
+    <!--<bean class="org.seckill.util.DefaultExceptionHandler"/>-->
 
-    <import resource="spring-dao.xml" />
+    <!--要要的-->
+    <!--<import resource="spring-dao.xml" />-->
 </beans>

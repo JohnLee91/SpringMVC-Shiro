@@ -126,6 +126,7 @@ public class Resource implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +
+                ", url='" + url + '\'' +
                 ", permission='" + permission + '\'' +
                 ", parentId=" + parentId +
                 ", parentIds='" + parentIds + '\'' +

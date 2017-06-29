@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Created by John Lee on 2017/2/27.
  * 配置spring和junit整合，junit启动时加载springIOC容器
- * spring-test,junit
+ * spring-aspect,junit
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 //告诉junit spring配置文件

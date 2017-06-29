@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by John Lee on 2017/2/21.
  * 配置spring和junit整合，junit启动时加载springIOC容器
- * spring-test,junit
+ * spring-aspect,junit
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 //告诉junit spring配置文件
