@@ -1,14 +1,16 @@
 package org.seckill.aspect;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.seckill.entity.User;
-import org.seckill.util.CurrentUser;
+import org.seckill.util.Constants;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by John Lee on 2017/6/29.
@@ -29,11 +31,14 @@ public class ServiceLogAspect {
         before();
         System.out.println(annotation.moduleName()+"-----------------------"+annotation.option());
         Object result = pj.proceed();
-//        System.out.println("+++++++++++++++"+loginUser.getUsername()+"+++++++++++++++");
+
+        //通过Request获取之前登录存入的用户信息（用户登录时通过SysUserFilter将user存入Request中）
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+        User user = (User)request.getAttribute(Constants.CURRENT_USER);
+
         if ((int)result > 0){
-            Subject subject = SecurityUtils.getSubject();
-            Session session = subject.getSession();
-            System.out.println(object.toString());
+            System.out.println(user.toString());
             after();
         }
 
@@ -53,8 +58,13 @@ public class ServiceLogAspect {
         before();
         System.out.println(annotation.moduleName()+"-------------interceptorWithoutObject----------"+annotation.option());
         Object result = pj.proceed();
-        Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();
+
+        //通过Request获取之前登录存入的用户信息（用户登录时通过SysUserFilter将user存入Request中）
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+        User user = (User)request.getAttribute(Constants.CURRENT_USER);
+        System.out.println(user.toString());
+
         after();
         return result;
     }
