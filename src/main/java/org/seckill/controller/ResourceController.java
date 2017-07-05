@@ -39,11 +39,12 @@ public class ResourceController {
     @RequiresPermissions("resource:create")
     @RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.GET)
     public String showAppendChildForm(@PathVariable("parentId") Long parentId, Model model) {
-        Resource parent = resourceService.findOne(parentId);
+        Resource parent = resourceService.selectById(parentId);
         model.addAttribute("parent", parent);
         Resource child = new Resource();
         child.setParentId(parentId);
         child.setParentIds(parent.makeSelfAsParentIds());
+        child.setAvailable(1);
         model.addAttribute("resource", child);
         model.addAttribute("op", "新增子节点");
         return "resource/edit";
@@ -60,7 +61,7 @@ public class ResourceController {
     @RequiresPermissions("resource:update")
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("resource", resourceService.findOne(id));
+        model.addAttribute("resource", resourceService.selectById(id));
         model.addAttribute("op", "修改");
         return "resource/edit";
     }

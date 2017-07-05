@@ -50,7 +50,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteUser(Long userId) {
         userRealm.clearAllCache();
-        return userDao.deleteUser(userId);
+        User user = this.selectById(userId);
+        user.setAvailable(0);
+
+        return this.updateUser(user);
     }
 
     /**
@@ -59,15 +62,15 @@ public class UserServiceImpl implements UserService {
      * @param newPassword
      */
     public void changePassword(Long userId, String newPassword) {
-        User user =userDao.findOne(userId);
+        User user =userDao.selectById(userId);
         user.setPassword(newPassword);
         passwordHelper.encryptPassword(user);
         userDao.updateUser(user);
     }
 
     @Override
-    public User findOne(Long userId) {
-        return userDao.findOne(userId);
+    public User selectById(Long userId) {
+        return userDao.selectById(userId);
     }
 
     @Override

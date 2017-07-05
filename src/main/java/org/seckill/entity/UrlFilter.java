@@ -13,6 +13,7 @@ public class UrlFilter implements Serializable {
     private String url; //地址
     private String roles; //所需要的角色，可省略
     private String permissions; //所需要的权限，可省略
+    private Integer available = 1;
 
     public Long getId() {
         return id;
@@ -54,6 +55,14 @@ public class UrlFilter implements Serializable {
         this.permissions = permissions;
     }
 
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +88,7 @@ public class UrlFilter implements Serializable {
                 ", url='" + url + '\'' +
                 ", roles='" + roles + '\'' +
                 ", permissions='" + permissions + '\'' +
+                ", available='" + available + '\'' +
                 '}';
     }
 }

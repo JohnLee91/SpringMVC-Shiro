@@ -47,14 +47,17 @@ public class UrlFilterServiceImpl implements UrlFilterService {
 
     @Override
     public int deleteUrlFilter(Long urlFilterId) {
-        int result = urlFilterDao.deleteUrlFilter(urlFilterId);
+        UrlFilter urlFilter = this.selectById(urlFilterId);
+        urlFilter.setAvailable(0);
+        int result = this.updateUrlFilter(urlFilter);
         initFilterChain();
+
         return result;
     }
 
     @Override
-    public UrlFilter findOne(Long urlFilterId) {
-        return urlFilterDao.findOne(urlFilterId);
+    public UrlFilter selectById(Long urlFilterId) {
+        return urlFilterDao.selectById(urlFilterId);
     }
 
     @Override

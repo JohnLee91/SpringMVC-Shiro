@@ -15,7 +15,7 @@ public interface OrganizationDao {
     public int updateOrganization(Organization organization);
     public int deleteOrganization(Long organizationId);
 
-    Organization findOne(Long organizationId);
+    Organization selectById(Long organizationId);
     List<Organization> findAll();
 
     List<Organization> findAllWithExclude(Organization excludeOraganization);

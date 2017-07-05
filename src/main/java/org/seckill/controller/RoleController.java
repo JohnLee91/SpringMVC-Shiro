@@ -55,7 +55,7 @@ public class RoleController {
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         setCommonData(model);
-        model.addAttribute("role", roleService.findOne(id));
+        model.addAttribute("role", roleService.selectById(id));
         model.addAttribute("op", "修改");
         return "role/edit";
     }
@@ -72,7 +72,7 @@ public class RoleController {
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public String showDeleteForm(@PathVariable("id") Long id, Model model) {
         setCommonData(model);
-        model.addAttribute("role", roleService.findOne(id));
+        model.addAttribute("role", roleService.selectById(id));
         model.addAttribute("op", "删除");
         return "role/edit";
     }

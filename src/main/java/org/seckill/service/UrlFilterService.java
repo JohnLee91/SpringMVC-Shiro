@@ -15,6 +15,6 @@ public interface UrlFilterService {
     public int updateUrlFilter(UrlFilter urlFilter);
     public int deleteUrlFilter(Long urlFilterId);
 
-    public UrlFilter findOne(Long urlFilterId);
+    public UrlFilter selectById(Long urlFilterId);
     public List<UrlFilter> findAll();
 }

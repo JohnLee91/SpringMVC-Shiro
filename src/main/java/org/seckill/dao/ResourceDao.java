@@ -15,7 +15,7 @@ public interface ResourceDao {
     public int updateResource(Resource resource);
     public int deleteResource(Long resourceId);
 
-    Resource findOne(Long resourceId);
+    Resource selectById(Long resourceId);
     List<Resource> findAll();
 
 }

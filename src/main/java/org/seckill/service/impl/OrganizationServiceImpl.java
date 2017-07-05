@@ -30,12 +30,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public int deleteOrganization(Long organizationId) {
-        return organizationDao.deleteOrganization(organizationId);
+        Organization organization = this.selectById(organizationId);
+        organization.setAvailable(0);
+
+        return this.updateOrganization(organization);
     }
 
     @Override
-    public Organization findOne(Long organizationId) {
-        return organizationDao.findOne(organizationId);
+    public Organization selectById(Long organizationId) {
+        return organizationDao.selectById(organizationId);
     }
 
     @Override

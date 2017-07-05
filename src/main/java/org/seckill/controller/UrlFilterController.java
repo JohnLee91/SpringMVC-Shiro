@@ -44,7 +44,7 @@ public class UrlFilterController {
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("urlFilter", urlFilterService.findOne(id));
+        model.addAttribute("urlFilter", urlFilterService.selectById(id));
         model.addAttribute("op", "修改");
         return "urlFilter/edit";
     }
@@ -58,7 +58,7 @@ public class UrlFilterController {
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public String showDeleteForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("urlFilter", urlFilterService.findOne(id));
+        model.addAttribute("urlFilter", urlFilterService.selectById(id));
         model.addAttribute("op", "删除");
         return "urlFilter/edit";
     }

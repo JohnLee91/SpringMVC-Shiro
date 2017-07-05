@@ -21,6 +21,7 @@ public class User implements Serializable {
     private List<Long> roleIds; //拥有的角色列表
     private String roleIdsStr;//拥有角色String
     private Boolean locked = Boolean.FALSE;
+    private Integer available = 1;
 
     public User() {
     }
@@ -119,6 +120,14 @@ public class User implements Serializable {
         this.locked = locked;
     }
 
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -146,6 +155,7 @@ public class User implements Serializable {
                 ", salt='" + salt + '\'' +
                 ", roleIds=" + roleIds +
                 ", locked=" + locked +
+                ", available=" + available +
                 '}';
     }
 }

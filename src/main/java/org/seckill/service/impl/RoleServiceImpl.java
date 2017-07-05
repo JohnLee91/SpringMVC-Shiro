@@ -38,12 +38,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     public int deleteRole(Long roleId) {
-        return roleDao.deleteRole(roleId);
+        Role role = this.selectById(roleId);
+        role.setAvailable(0);
+
+        return this.updateRole(role);
     }
 
     @Override
-    public Role findOne(Long roleId) {
-        return roleDao.findOne(roleId);
+    public Role selectById(Long roleId) {
+        return roleDao.selectById(roleId);
     }
 
     @Override
@@ -55,7 +58,7 @@ public class RoleServiceImpl implements RoleService {
     public Set<String> findRoles(Long... roleIds) {
         Set<String> roles = new HashSet<String>();
         for(Long roleId : roleIds) {
-            Role role = findOne(roleId);
+            Role role = selectById(roleId);
             if(role != null) {
                 roles.add(role.getRole());
             }
@@ -67,7 +70,7 @@ public class RoleServiceImpl implements RoleService {
     public Set<String> findPermissions(Long[] roleIds) {
         Set<Long> resourceIds = new HashSet<Long>();
         for(Long roleId : roleIds) {
-            Role role = findOne(roleId);
+            Role role = selectById(roleId);
             if(role != null) {
                 resourceIds.addAll(role.getResourceIds());
             }

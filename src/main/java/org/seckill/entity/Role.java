@@ -18,12 +18,12 @@ public class Role implements Serializable {
     private String description; //角色描述,UI界面显示使用
     private List<Long> resourceIds; //拥有的资源
     private String resourceIdsStr;//拥有资源String
-    private Boolean available = Boolean.FALSE; //是否可用,如果不可用将不会添加给用户
+    private Integer available = 1; //是否可用,如果不可用将不会添加给用户
 
     public Role() {
     }
 
-    public Role(String role, String description, Boolean available) {
+    public Role(String role, String description, Integer available) {
         this.role = role;
         this.description = description;
         this.available = available;
@@ -89,11 +89,11 @@ public class Role implements Serializable {
         }
     }
 
-    public Boolean getAvailable() {
+    public Integer getAvailable() {
         return available;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(Integer available) {
         this.available = available;
     }
 

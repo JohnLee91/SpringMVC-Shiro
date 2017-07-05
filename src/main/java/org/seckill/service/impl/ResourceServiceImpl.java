@@ -41,16 +41,21 @@ public class ResourceServiceImpl implements ResourceService {
         return resourceDao.updateResource(resource);
     }
 
-    @ServiceLogAnnotation(moduleName="资源管理",option="删除资源")
+    //@ServiceLogAnnotation(moduleName="资源管理",option="删除资源")
     @Override
     public int deleteResource(Long resourceId) {
         userRealm.clearAllCache();
-        return resourceDao.deleteResource(resourceId);
+        Resource resource = this.selectById(resourceId);
+        resource.setAvailable(0);
+
+        int result = this.updateResource(resource);
+
+        return result;
     }
 
     @Override
-    public Resource findOne(Long resourceId) {
-        return resourceDao.findOne(resourceId);
+    public Resource selectById(Long resourceId) {
+        return resourceDao.selectById(resourceId);
     }
 
     @Override
@@ -63,7 +68,7 @@ public class ResourceServiceImpl implements ResourceService {
     public Set<String> findPermissions(Set<Long> resourceIds) {
         Set<String> permissions = new HashSet<String>();
         for(Long resourceId : resourceIds) {
-            Resource resource = findOne(resourceId);
+            Resource resource = selectById(resourceId);
             if(resource != null && !StringUtils.isEmpty(resource.getPermission())) {
                 permissions.add(resource.getPermission());
             }

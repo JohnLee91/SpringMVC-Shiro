@@ -26,7 +26,7 @@ public class Functions {
     }
 
     public static String organizationName(Long organizationId) {
-        Organization organization = getOrganizationService().findOne(organizationId);
+        Organization organization = getOrganizationService().selectById(organizationId);
         if(organization == null) {
             return "";
         }
@@ -40,7 +40,7 @@ public class Functions {
 
         StringBuilder s = new StringBuilder();
         for(Long organizationId : organizationIds) {
-            Organization organization = getOrganizationService().findOne(organizationId);
+            Organization organization = getOrganizationService().selectById(organizationId);
             if(organization == null) {
                 return "";
             }
@@ -55,7 +55,7 @@ public class Functions {
         return s.toString();
     }
     public static String roleName(Long roleId) {
-        Role role = getRoleService().findOne(roleId);
+        Role role = getRoleService().selectById(roleId);
         if(role == null) {
             return "";
         }
@@ -69,7 +69,7 @@ public class Functions {
 
         StringBuilder s = new StringBuilder();
         for(Long roleId : roleIds) {
-            Role role = getRoleService().findOne(roleId);
+            Role role = getRoleService().selectById(roleId);
             if(role == null) {
                 return "";
             }
@@ -84,7 +84,7 @@ public class Functions {
         return s.toString();
     }
     public static String resourceName(Long resourceId) {
-        Resource resource = getResourceService().findOne(resourceId);
+        Resource resource = getResourceService().selectById(resourceId);
         if(resource == null) {
             return "";
         }
@@ -97,7 +97,7 @@ public class Functions {
 
         StringBuilder s = new StringBuilder();
         for(Long resourceId : resourceIds) {
-            Resource resource = getResourceService().findOne(resourceId);
+            Resource resource = getResourceService().selectById(resourceId);
             if(resource == null) {
                 return "";
             }

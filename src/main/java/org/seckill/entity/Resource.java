@@ -15,7 +15,7 @@ public class Resource implements Serializable {
     private String permission; //权限字符串
     private Long parentId; //父编号
     private String parentIds; //父编号列表
-    private Boolean available = Boolean.FALSE;
+    private Integer available = 1;
 
     public static enum ResourceType {
         menu("菜单"), button("按钮");
@@ -88,11 +88,11 @@ public class Resource implements Serializable {
         this.parentIds = parentIds;
     }
 
-    public Boolean getAvailable() {
+    public Integer getAvailable() {
         return available;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(Integer available) {
         this.available = available;
     }
 

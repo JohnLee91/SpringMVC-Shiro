@@ -16,7 +16,7 @@ public interface OrganizationService {
     public int updateOrganization(Organization organization);
     public int deleteOrganization(Long organizationId);
 
-    Organization findOne(Long organizationId);
+    Organization selectById(Long organizationId);
     List<Organization> findAll();
 
     Object findAllWithExclude(Organization excludeOraganization);

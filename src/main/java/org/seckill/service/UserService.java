@@ -30,7 +30,7 @@ public interface UserService {
     public void changePassword(Long userId, String newPassword);
 
 
-    User findOne(Long userId);
+    User selectById(Long userId);
 
     List<User> findAll();
 

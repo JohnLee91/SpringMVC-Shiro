@@ -3,14 +3,20 @@ package org.seckill.aspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.seckill.entity.SysLog;
 import org.seckill.entity.User;
+import org.seckill.service.SysLogService;
 import org.seckill.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * Created by John Lee on 2017/6/29.
@@ -18,6 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 public class ServiceLogAspect {
+    @Autowired
+    SysLogService sysLogService;
+
+    private Logger logger = LoggerFactory.getLogger(ServiceLogAspect.class);
+
     /**
      * 注解在带参数的函数上
      * @param pj
@@ -28,21 +39,21 @@ public class ServiceLogAspect {
      */
     @Around(value = "@annotation(annotation) && args(object,..) ", argNames = "pj,annotation,object")
     public Object interceptorServiceLog(ProceedingJoinPoint pj, ServiceLogAnnotation annotation, Object object) throws Throwable {
-        before();
-        System.out.println(annotation.moduleName()+"-----------------------"+annotation.option());
-        Object result = pj.proceed();
+        try {
+            before();
+            System.out.println(annotation.moduleName()+"-----------------------"+annotation.option());
+            Object result = pj.proceed();
 
-        //通过Request获取之前登录存入的用户信息（用户登录时通过SysUserFilter将user存入Request中）
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
-        User user = (User)request.getAttribute(Constants.CURRENT_USER);
+            if ((int)result > 0){
+                after(annotation,object);
+            }
 
-        if ((int)result > 0){
-            System.out.println(user.toString());
-            after();
+            return result;
+        }catch (Exception e){
+            logger.error(e.toString());
         }
 
-        return result;
+        return null;
     }
 
     /**
@@ -59,13 +70,7 @@ public class ServiceLogAspect {
         System.out.println(annotation.moduleName()+"-------------interceptorWithoutObject----------"+annotation.option());
         Object result = pj.proceed();
 
-        //通过Request获取之前登录存入的用户信息（用户登录时通过SysUserFilter将user存入Request中）
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
-        User user = (User)request.getAttribute(Constants.CURRENT_USER);
-        System.out.println(user.toString());
-
-        after();
+        //after();
         return result;
     }
 
@@ -73,7 +78,24 @@ public class ServiceLogAspect {
         System.out.println("------------Before------------");
     }
 
-    private void after() {
+    private void after(ServiceLogAnnotation annotation,Object object) {
+        //通过Request获取之前登录存入的用户信息（用户登录时通过SysUserFilter将user存入Request中）
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+        User user = (User)request.getAttribute(Constants.CURRENT_USER);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setUserId(user.getId());
+        sysLog.setUsername(user.getUsername());
+        sysLog.setIp(request.getRemoteAddr());
+        sysLog.setModuleName(annotation.moduleName());
+        sysLog.setOptions(annotation.option());
+        sysLog.setContent(object.toString());
+        sysLog.setOptTime(new Date());
+
+        sysLogService.insertLog(sysLog);
+        logger.info(sysLog.toString());
+
         System.out.println("------------After-------------");
     }
 }

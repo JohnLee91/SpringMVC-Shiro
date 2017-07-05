@@ -40,7 +40,7 @@ public class OrganizationController {
     @RequiresPermissions("organization:create")
     @RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.GET)
     public String showAppendChildForm(@PathVariable("parentId") Long parentId, Model model) {
-        Organization parent = organizationService.findOne(parentId);
+        Organization parent = organizationService.selectById(parentId);
         model.addAttribute("parent", parent);
         Organization child = new Organization();
         child.setParentId(parentId);
@@ -60,7 +60,7 @@ public class OrganizationController {
     @RequiresPermissions("organization:update")
     @RequestMapping(value = "/{id}/maintain", method = RequestMethod.GET)
     public String showMaintainForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("organization", organizationService.findOne(id));
+        model.addAttribute("organization", organizationService.selectById(id));
         return "organization/maintain";
     }
 
@@ -84,7 +84,7 @@ public class OrganizationController {
     @RequiresPermissions("organization:update")
     @RequestMapping(value = "/{sourceId}/move", method = RequestMethod.GET)
     public String showMoveForm(@PathVariable("sourceId") Long sourceId, Model model) {
-        Organization source = organizationService.findOne(sourceId);
+        Organization source = organizationService.selectById(sourceId);
         model.addAttribute("source", source);
         model.addAttribute("targetList", organizationService.findAllWithExclude(source));
         return "organization/move";
@@ -95,8 +95,8 @@ public class OrganizationController {
     public String move(
             @PathVariable("sourceId") Long sourceId,
             @RequestParam("targetId") Long targetId) {
-        Organization source = organizationService.findOne(sourceId);
-        Organization target = organizationService.findOne(targetId);
+        Organization source = organizationService.selectById(sourceId);
+        Organization target = organizationService.selectById(targetId);
         organizationService.move(source, target);
         return "redirect:/organization/success";
     }

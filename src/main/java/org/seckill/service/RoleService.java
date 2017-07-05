@@ -17,7 +17,7 @@ public interface RoleService {
     public int updateRole(Role role);
     public int deleteRole(Long roleId);
 
-    public Role findOne(Long roleId);
+    public Role selectById(Long roleId);
     public List<Role> findAll();
 
     /**
