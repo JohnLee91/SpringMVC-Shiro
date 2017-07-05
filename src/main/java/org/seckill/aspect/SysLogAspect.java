@@ -38,7 +38,7 @@ public class SysLogAspect {
      * @throws Throwable
      */
     @Around(value = "@annotation(annotation) && args(object,..) ", argNames = "pj,annotation,object")
-    public Object interceptorServiceLog(ProceedingJoinPoint pj, ServiceLogAnnotation annotation, Object object) throws Throwable {
+    public Object interceptorServiceLog(ProceedingJoinPoint pj, SysLogAnnotation annotation, Object object) throws Throwable {
         try {
             before();
             System.out.println(annotation.moduleName()+"-----------------------"+annotation.option());
@@ -66,7 +66,7 @@ public class SysLogAspect {
      */
     @Around(value = "@annotation(annotation)&&args()", argNames = "pj,annotation")
     public Object interceptorWithoutObject(ProceedingJoinPoint pj,
-                                           ServiceLogAnnotation annotation) throws Throwable {
+                                           SysLogAnnotation annotation) throws Throwable {
         before();
         System.out.println(annotation.moduleName()+"-------------interceptorWithoutObject----------"+annotation.option());
         Object result = pj.proceed();
@@ -79,7 +79,7 @@ public class SysLogAspect {
         System.out.println("------------Before------------");
     }
 
-    private void after(ServiceLogAnnotation annotation,Object object) {
+    private void after(SysLogAnnotation annotation, Object object) {
         //通过Request获取之前登录存入的用户信息（用户登录时通过SysUserFilter将user存入Request中）
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();

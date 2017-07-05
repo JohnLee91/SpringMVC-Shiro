@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)//作用于方法上
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ServiceLogAnnotation {
+public @interface SysLogAnnotation {
     //模块名
     String moduleName() default "";
     //操作内容

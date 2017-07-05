@@ -1,6 +1,6 @@
 package org.seckill.service.impl;
 
-import org.seckill.aspect.ServiceLogAnnotation;
+import org.seckill.aspect.SysLogAnnotation;
 import org.seckill.dao.ResourceDao;
 import org.seckill.entity.Resource;
 import org.apache.shiro.authz.permission.WildcardPermission;
@@ -28,20 +28,20 @@ public class ResourceServiceImpl implements ResourceService {
     @Autowired
     private UserRealm userRealm;
 
-    @ServiceLogAnnotation(moduleName="资源管理",option="创建资源")
+    @SysLogAnnotation(moduleName="资源管理",option="创建资源")
     @Override
     public int createResource(Resource resource) {
         return resourceDao.createResource(resource);
     }
 
-    @ServiceLogAnnotation(moduleName="资源管理",option="更新资源")
+    @SysLogAnnotation(moduleName="资源管理",option="更新资源")
     @Override
     public int updateResource(Resource resource) {
         userRealm.clearAllCache();
         return resourceDao.updateResource(resource);
     }
 
-    @ServiceLogAnnotation(moduleName="资源管理",option="删除资源")
+    @SysLogAnnotation(moduleName="资源管理",option="删除资源")
     @Override
     public Resource deleteResource(Long resourceId) {
         userRealm.clearAllCache();
@@ -58,7 +58,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    @ServiceLogAnnotation(moduleName="资源管理",option="查询资源")
+    @SysLogAnnotation(moduleName="资源管理",option="查询资源")
     public List<Resource> findAll() {
         return resourceDao.findAll();
     }
