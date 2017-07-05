@@ -15,7 +15,7 @@
     </sql>
 
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <insert id="createRole" parameterType="Role">
+    <insert id="createRole" parameterType="Role" useGeneratedKeys="true" keyProperty="id">
         <!-- 具体sql -->
         INSERT INTO sys_role(role, description, resource_ids, available) values
         (#{role}, #{description}, #{resourceIdsStr}, #{available})
@@ -31,7 +31,7 @@
         WHERE id=#{roleId}
     </delete>
 
-    <select id="findOne" resultMap="roleResultMap" parameterType="long">
+    <select id="selectById" resultMap="roleResultMap" parameterType="long">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="r1"/></include>
         FROM sys_role r1
@@ -41,7 +41,7 @@
     <select id="findAll" resultMap="roleResultMap">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="r1"/></include>
-        FROM sys_role r1
+        FROM sys_role r1 WHERE available=1
         ORDER BY id DESC
     </select>
 

@@ -8,7 +8,7 @@
     </sql>
 
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <insert id="createOrganization" parameterType="Organization">
+    <insert id="createOrganization" parameterType="Organization" useGeneratedKeys="true" keyProperty="id">
         <!-- 具体sql -->
         INSERT INTO sys_organization( name, parent_id, parent_ids, available) values
         (#{name}, #{parentId}, #{parentIds}, #{available})
@@ -24,7 +24,7 @@
         WHERE id=#{organizationId}
     </delete>
 
-    <select id="findOne" resultType="Organization" parameterType="long">
+    <select id="selectById" resultType="Organization" parameterType="long">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="o1"/></include>
         FROM sys_organization o1
@@ -34,7 +34,7 @@
     <select id="findAll" resultType="Organization">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="o1"/></include>
-        FROM sys_organization o1
+        FROM sys_organization o1 WHERE available=1
         ORDER BY id DESC
         <!-- LIMIT #{offset},#{limit} -->
     </select>
@@ -43,7 +43,7 @@
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="o1"/></include>
         FROM sys_organization o1
-        WHERE id = #{organizationId} AND parent_ids NOT LIKE #{excludeOraganization}
+        WHERE id = #{organizationId} AND parent_ids NOT LIKE #{excludeOraganization} AND available=1
         ORDER BY id DESC
     </select>
 

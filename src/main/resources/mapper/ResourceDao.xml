@@ -18,10 +18,10 @@
     </sql>
 
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <insert id="createResource" parameterType="Resource">
+    <insert id="createResource" parameterType="Resource" useGeneratedKeys="true" keyProperty="id">
         <!-- 具体sql -->
         INSERT INTO sys_resource(name, type, url, permission, parent_id, parent_ids, available) values
-        (#{name}, #{type}, #{url}, #{permission}, #{parentId}, #{parentIds}, 1)
+        (#{name}, #{type}, #{url}, #{permission}, #{parentId}, #{parentIds}, #{available})
     </insert>
 
     <update id="updateResource" parameterType="Resource">
@@ -34,7 +34,7 @@
         WHERE id=#{resourceId}
     </delete>
 
-    <select id="findOne" resultMap="resourceResultMap" parameterType="long">
+    <select id="selectById" resultMap="resourceResultMap" parameterType="long">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="r1"/></include>
         FROM sys_resource r1
@@ -44,7 +44,7 @@
     <select id="findAll" resultMap="resourceResultMap">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="r1"/></include>
-        FROM sys_resource r1
+        FROM sys_resource r1 WHERE available=1
         ORDER BY id ASC
     </select>
 

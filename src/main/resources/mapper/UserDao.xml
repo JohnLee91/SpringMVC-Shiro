@@ -11,21 +11,22 @@
         <result property="salt" column="salt"/>
         <result property="roleIdsStr" column="role_ids"/>
         <result property="locked" column="locked"/>
+        <result property="available" column="available"/>
     </resultMap>
     <sql id="Base_Column_List">
-        ${alias}.id, ${alias}.organization_id, ${alias}.username, ${alias}.password, ${alias}.salt, ${alias}.role_ids, ${alias}.locked
+        ${alias}.id, ${alias}.organization_id, ${alias}.username, ${alias}.password, ${alias}.salt, ${alias}.role_ids, ${alias}.locked, ${alias}.available
     </sql>
 
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <insert id="createUser" parameterType="User">
+    <insert id="createUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         <!-- 具体sql -->
-        INSERT INTO sys_user(organization_id, username, password, salt, role_ids, locked) values
-        (#{organizationId}, #{username}, #{password}, #{salt}, #{roleIdsStr}, #{locked})
+        INSERT INTO sys_user(organization_id, username, password, salt, role_ids, locke, available) values
+        (#{organizationId}, #{username}, #{password}, #{salt}, #{roleIdsStr}, #{locked}, #{available})
     </insert>
 
     <update id="updateUser" parameterType="User">
         UPDATE sys_user SET organization_id=#{organizationId}, username=#{username}, password=#{password},
-        salt=#{salt}, role_ids=#{roleIdsStr}, locked=#{locked}
+        salt=#{salt}, role_ids=#{roleIdsStr}, locked=#{locked}, available=#{available}
         WHERE id=#{id}
     </update>
 
@@ -34,7 +35,7 @@
         WHERE id=#{userId}
     </delete>
 
-    <select id="findOne" resultMap="userResultMap" parameterType="long">
+    <select id="selectById" resultMap="userResultMap" parameterType="long">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
         FROM sys_user u1
@@ -44,7 +45,7 @@
     <select id="findAll" resultMap="userResultMap">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
-        FROM sys_user u1
+        FROM sys_user u1 WHERE available=1
         ORDER BY id DESC
     </select>
 

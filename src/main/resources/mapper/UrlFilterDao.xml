@@ -9,20 +9,21 @@
         <result property="url" column="url"/>
         <result property="roles" column="roles"/>
         <result property="permissions" column="permissions"/>
+        <result property="available" column="available"/>
     </resultMap>
     <sql id="Base_Column_List">
-        ${alias}.id, ${alias}.name, ${alias}.url, ${alias}.roles, ${alias}.permissions
+        ${alias}.id, ${alias}.name, ${alias}.url, ${alias}.roles, ${alias}.permissions, ${alias}.available
     </sql>
 
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
-    <insert id="createUrlFilter" parameterType="UrlFilter">
+    <insert id="createUrlFilter" parameterType="UrlFilter" useGeneratedKeys="true" keyProperty="id">
         <!-- 具体sql -->
-        INSERT INTO sys_url_filter(name, url, roles, permissions) values
-        (#{name}, #{url}, #{roles}, #{permissions})
+        INSERT INTO sys_url_filter(name, url, roles, permissions ,available) values
+        (#{name}, #{url}, #{roles}, #{permissions}, #{available})
     </insert>
 
     <update id="updateUrlFilter" parameterType="UrlFilter">
-        UPDATE sys_url_filter SET name=#{name}, url=#{url}, roles=#{roles}, permissions=#{permissions}
+        UPDATE sys_url_filter SET name=#{name}, url=#{url}, roles=#{roles}, permissions=#{permissions}, available=#{available}
         WHERE id=#{id}
     </update>
 
@@ -31,7 +32,7 @@
         WHERE id=#{urlFilterId}
     </delete>
 
-    <select id="findOne" resultMap="urlFilterResultMap" parameterType="long">
+    <select id="selectById" resultMap="urlFilterResultMap" parameterType="long">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
         FROM sys_url_filter u1
@@ -41,7 +42,7 @@
     <select id="findAll" resultMap="urlFilterResultMap">
         SELECT
         <include refid="Base_Column_List"><property name="alias" value="u1"/></include>
-        FROM sys_url_filter u1
+        FROM sys_url_filter u1 WHERE available=1
         ORDER BY id DESC
     </select>
 

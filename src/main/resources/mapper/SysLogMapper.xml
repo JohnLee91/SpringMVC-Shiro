@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.seckill.dao.SysLogDao" >
+    <resultMap id="BaseResultMap" type="org.seckill.entity.SysLog" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+        <result column="options" property="options" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="opt_time" property="optTime" jdbcType="TIMESTAMP" />
+        <result column="available" property="available" jdbcType="SMALLINT" />
+        <association property="user" resultMap="org.seckill.dao.UserDao.userResultMap" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ${alias}.id, ${alias}.user_id, ${alias}.username, ${alias}.ip, ${alias}.module_name, ${alias}.options, ${alias}.content, ${alias}.opt_time, ${alias}.available
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List"><property name="alias" value="s1"/></include>
+        from sys_log s1
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Long" >
+        delete from sys_log
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="org.seckill.entity.SysLog" >
+        insert into sys_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="username != null" >
+                username,
+            </if>
+            <if test="ip != null" >
+                ip,
+            </if>
+            <if test="moduleName != null" >
+                module_name,
+            </if>
+            <if test="options != null" >
+                options,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+            <if test="optTime != null" >
+                opt_time,
+            </if>
+            <if test="available != null" >
+                available,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="username != null" >
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null" >
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleName != null" >
+                #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="options != null" >
+                #{options,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="optTime != null" >
+                #{optTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="available != null" >
+                #{available,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="org.seckill.entity.SysLog" >
+        update sys_log
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="username != null" >
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null" >
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleName != null" >
+                module_name = #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="options != null" >
+                options = #{options,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="optTime != null" >
+                opt_time = #{optTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="available != null" >
+                available = #{available,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="s1"/></include>
+        FROM sys_log s1
+        ORDER BY id DESC
+    </select>
+
+</mapper>
