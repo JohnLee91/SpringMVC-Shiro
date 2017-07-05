@@ -15,7 +15,7 @@ public interface ResourceService {
 
     public int createResource(Resource resource);
     public int updateResource(Resource resource);
-    public int deleteResource(Long resourceId);
+    public Resource deleteResource(Long resourceId);
 
     Resource selectById(Long resourceId);
     List<Resource> findAll();

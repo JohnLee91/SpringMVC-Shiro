@@ -41,16 +41,15 @@ public class ResourceServiceImpl implements ResourceService {
         return resourceDao.updateResource(resource);
     }
 
-    //@ServiceLogAnnotation(moduleName="资源管理",option="删除资源")
+    @ServiceLogAnnotation(moduleName="资源管理",option="删除资源")
     @Override
-    public int deleteResource(Long resourceId) {
+    public Resource deleteResource(Long resourceId) {
         userRealm.clearAllCache();
         Resource resource = this.selectById(resourceId);
         resource.setAvailable(0);
+        this.updateResource(resource);
 
-        int result = this.updateResource(resource);
-
-        return result;
+        return resource;
     }
 
     @Override

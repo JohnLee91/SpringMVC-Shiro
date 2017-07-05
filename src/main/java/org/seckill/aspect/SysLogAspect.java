@@ -23,11 +23,11 @@ import java.util.Date;
  */
 @Aspect
 @Component
-public class ServiceLogAspect {
+public class SysLogAspect {
     @Autowired
-    SysLogService sysLogService;
+    private SysLogService sysLogService;
 
-    private Logger logger = LoggerFactory.getLogger(ServiceLogAspect.class);
+    private Logger logger = LoggerFactory.getLogger(SysLogAspect.class);
 
     /**
      * 注解在带参数的函数上
@@ -44,9 +44,10 @@ public class ServiceLogAspect {
             System.out.println(annotation.moduleName()+"-----------------------"+annotation.option());
             Object result = pj.proceed();
 
-            if ((int)result > 0){
+            if (object instanceof Number)//如果是delete，传入的是删除的id，为数字，返回结果result才是实体类
+                after(annotation,result);
+            else//如果是insert和update，传递参数为实体类，直接使用
                 after(annotation,object);
-            }
 
             return result;
         }catch (Exception e){
