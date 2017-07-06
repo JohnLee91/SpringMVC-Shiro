@@ -8,6 +8,9 @@
 # ignore Maven generated target folders
 target/
 
+# 忽略日志文件
+logs/
+
 # ignore eclipse files
 .project
 .classpath
