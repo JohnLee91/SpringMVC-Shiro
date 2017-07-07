@@ -47,6 +47,13 @@
             <artifactId>logback-classic</artifactId>
             <version>1.1.7</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
+        <!--解决运行后spring的日志都输出到控制台，而不受logback控制。。。这是一个适配器。不加上这个配置，logback还无法写日志到文件中-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.12</version>
+        </dependency>
 
         <!-- 2:数据库相关依赖 -->
         <dependency>

@@ -12,7 +12,9 @@
 	FILEDEBUG对应debug级别，文件名以log-debug-xxx.log形式命名 stdout将日志信息输出到控制上，为方便开发测试使用 -->
 <configuration>
 
-	<property name="LOG_PATH" value="${user.dir}/logs" />
+	<!--目录与src同级别-->
+	<!--<property name="LOG_PATH" value="${user.dir}/logs" />-->
+	<property name="LOG_PATH" value="/logs" />
 
 	<!-- 1 -->
 	<appender name="FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
@@ -23,16 +25,15 @@
 			<defaultValue>head0</defaultValue>
 		</discriminator>
 		<sift>
-			<!-- A standard RollingFileAppender, the log file is based on 'logFileName' 
-
-				at runtime -->
+			<!-- A standard RollingFileAppender, the log file is based on 'logFileName' at runtime -->
 			<appender name="FILE-${logFileName}"
 				class="ch.qos.logback.core.rolling.RollingFileAppender">
 				<file>${LOG_PATH}/${logFileName}.log</file>
 				<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-					<Pattern>
+					<pattern>
 						%d{yyyy-MM-dd HH:mm:ss} %mdc [%thread] %level %logger{35} - %msg%n
-					</Pattern>
+					</pattern>
+					<charset>utf-8</charset>
 				</encoder>
 				<rollingPolicy
 					class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -64,8 +65,7 @@
 			<!-- 归档的日志文件的路径，例如今天是2013-12-21日志，当前写的日志文件路径为file节点指定，可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。 
 
 				而2013-12-21的日志文件在由fileNamePattern指定。%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
-			<fileNamePattern>${LOG_PATH}/log-error-%d{yyyy-MM-dd}.%i.log
-			</fileNamePattern>
+			<fileNamePattern>${LOG_PATH}/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始， 命名日志文件，例如log-error-2013-12-21.0.log -->
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -91,8 +91,7 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_PATH}/log_warn.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/log-warn-%d{yyyy-MM-dd}.%i.log
-			</fileNamePattern>
+			<fileNamePattern>${LOG_PATH}/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>2MB</maxFileSize>
@@ -115,8 +114,7 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_PATH}/log_info.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/log-info-%d{yyyy-MM-dd}.%i.log
-			</fileNamePattern>
+			<fileNamePattern>${LOG_PATH}/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>2MB</maxFileSize>
@@ -140,8 +138,7 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_PATH}/log_debug.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/log-debug-%d{yyyy-MM-dd}.%i.log
-			</fileNamePattern>
+			<fileNamePattern>${LOG_PATH}/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>2MB</maxFileSize>
@@ -162,7 +159,7 @@
 
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
 		<Target>System.out</Target>
-		<encoder>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>%-5p [%d][%mdc{mdc_accNo}] %C:%L - %m %n</pattern>
 			<charset>utf-8</charset>
 		</encoder>
@@ -175,8 +172,9 @@
 	<appender name="FILTER_INFO"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${LOG_PATH}/log_filter.log</File>
-		<encoder>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} : %m%n</pattern>
+			<charset>utf-8</charset>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>INFO</level>
@@ -195,8 +193,9 @@
 	<appender name="INTEREST_BEARING_INFO"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${LOG_PATH}/log_interest_bearing.log</File>
-		<encoder>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} : %m%n</pattern>
+			<charset>utf-8</charset>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>INFO</level>
@@ -211,7 +210,6 @@
 		<appender-ref ref="INTEREST_BEARING_INFO" />
 	</logger>
 
-
 	<!-- 为单独的包配置日志级别，若root的级别大于此级别， 此处级别也会输出 应用场景：生产环境一般不会将日志级别设置为trace或debug，但是为详细的记录SQL语句的情况， 
 
 		可将hibernate的级别设置为debug，如此一来，日志文件中就会出现hibernate的debug级别日志， 而其它包则会按root的级别输出日志 -->
@@ -219,14 +217,15 @@
 	<logger name="com.ibatis" level="DEBUG" />
 	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
 	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
-	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate"
-		level="DEBUG" />
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
 	<logger name="java.sql.Connection" level="DEBUG" />
 	<logger name="java.sql.Statement" level="DEBUG" />
-	<logger name="java.sql.PreparedStatement" level="DEBUG" />
+	<logger name="java.sql.PreparedStatement" level="DEBUG"/>
+
 
 	<!-- 生产环境，将此级别配置为适合的级别，以名日志文件太多或影响程序性能 -->
 	<root level="INFO">
+	<!--<root level="DEBUG">-->
 		<appender-ref ref="FILEDEBUG" />
 		<appender-ref ref="FILEINFO" />
 		<appender-ref ref="FILEWARN" />

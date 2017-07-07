@@ -4,7 +4,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>Shiro综合案例</title>
+    <title>脚手架</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/layout-default-latest.css">
 </head>
 <body>

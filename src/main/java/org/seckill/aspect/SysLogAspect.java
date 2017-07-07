@@ -27,7 +27,7 @@ public class SysLogAspect {
     @Autowired
     private SysLogService sysLogService;
 
-    private Logger logger = LoggerFactory.getLogger(SysLogAspect.class);
+    private final static Logger logger = LoggerFactory.getLogger(SysLogAspect.class);
 
     /**
      * 注解在带参数的函数上
