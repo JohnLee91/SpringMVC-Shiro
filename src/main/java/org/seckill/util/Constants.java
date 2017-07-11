@@ -1,10 +1,9 @@
 package org.seckill.util;
 
 /**
- * <p>User: Zhang Kaitao
- * <p>Date: 14-2-15
- * <p>Version: 1.0
+ * 常量
  */
 public class Constants {
     public static final String CURRENT_USER = "user";
+    public static final Integer PAGE_SIZE = 5;
 }
