@@ -130,4 +130,19 @@
         ORDER BY id DESC
     </select>
 
+    <select id="queryByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="s1"/></include>
+        FROM sys_log s1
+        <where>
+            <if test="moduleName != null and moduleName !=''">
+                AND module_name like '%' #{moduleName,jdbcType=VARCHAR} '%'
+            </if>
+            <if test="options != null and options !=''">
+                AND options like '%' #{options,jdbcType=VARCHAR} '%'
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
 </mapper>
