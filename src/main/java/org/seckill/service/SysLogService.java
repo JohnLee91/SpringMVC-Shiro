@@ -1,5 +1,6 @@
 package org.seckill.service;
 
+import com.github.pagehelper.PageInfo;
 import org.seckill.entity.SysLog;
 
 import java.util.List;
@@ -10,10 +11,11 @@ import java.util.List;
  * <p>Version: 1.0
  */
 public interface SysLogService {
-    public int insertLog(SysLog sysLog);
-    public int updateLog(SysLog sysLog);
-    public int deleteLog(Long logId);
+    int insertLog(SysLog sysLog);
+    int updateLog(SysLog sysLog);
+    int deleteLog(Long logId);
 
     SysLog selectById(Long logId);
     List<SysLog> findAll();
+    PageInfo<SysLog> queryByPage(String moduleName, String options, Integer pageNo, Integer pageSize);
 }

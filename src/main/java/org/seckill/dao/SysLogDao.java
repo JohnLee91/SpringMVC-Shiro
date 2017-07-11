@@ -7,6 +7,7 @@
  */
 package org.seckill.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.seckill.entity.SysLog;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface SysLogDao {
     int update(SysLog record);
 
     List<SysLog> findAll();
+
+    List<SysLog> queryByPage(@Param("moduleName")String moduleName, @Param("options")String options);
 }
