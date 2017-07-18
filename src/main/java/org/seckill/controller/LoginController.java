@@ -2,6 +2,7 @@ package org.seckill.controller;
 
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.seckill.util.MessageUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +22,11 @@ public class LoginController {
         String exceptionClassName = (String)req.getAttribute("shiroLoginFailure");
         String error = null;
         if(UnknownAccountException.class.getName().equals(exceptionClassName)) {
-            error = "用户名/密码错误";
+            error = MessageUtils.message("user.not.exists");
         } else if(IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
-            error = "用户名/密码错误";
+            error = MessageUtils.message("user.password.not.match");
         } else if(exceptionClassName != null) {
-            error = "其他错误：" + exceptionClassName;
+            error = exceptionClassName;
         }
         model.addAttribute("error", error);
         return "login";
