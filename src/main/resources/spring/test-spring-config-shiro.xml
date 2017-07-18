@@ -95,12 +95,25 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
-    <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+    <!-- 基于Form表单的身份验证过滤器，不用验证码 -->
+    <!--<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">-->
+        <!--<property name="usernameParam" value="username"/>-->
+        <!--<property name="passwordParam" value="password"/>-->
+        <!--<property name="rememberMeParam" value="rememberMe"/>-->
+        <!--<property name="loginUrl" value="/login"/>-->
+    <!--</bean>-->
+    <!-- 基于Form表单的身份验证过滤器,加入验证码 -->
+    <bean id="formAuthenticationFilter"
+          class="org.seckill.util.jcaptcha.MyFormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
-        <property name="loginUrl" value="/login"/>
+        <property name="failureKeyAttribute" value="shiroLoginFailure"/>
+    </bean>
+    <bean id="jCaptchaValidateFilter" class="org.seckill.util.jcaptcha.JCaptchaValidateFilter">
+        <property name="jcaptchaEbabled" value="true"/>
+        <property name="jcaptchaParam" value="jcaptchaCode"/>
+        <property name="failureKeyAttribute" value="shiroLoginFailure"/>
     </bean>
 
     <!--sysUserFilter用于根据当前登录用户身份获取User信息放入 request；然后就可以通过 request获取 User。-->
@@ -116,11 +129,13 @@
             <util:map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
                 <entry key="sysUser" value-ref="sysUserFilter"/>
+                <entry key="jCaptchaValidate" value-ref="jCaptchaValidateFilter"/>
             </util:map>
         </property>
         <property name="defaultFilterChainDefinitions">
             <value>
-                /login = authc
+                /jcaptcha* = anon
+                /login = jCaptchaValidate,authc
                 /logout = logout
                 /unauthorized = authc
                 /** = user,sysUser
