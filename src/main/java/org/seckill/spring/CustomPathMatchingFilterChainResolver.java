@@ -23,7 +23,7 @@ public class CustomPathMatchingFilterChainResolver extends PathMatchingFilterCha
         setFilterChainManager(customDefaultFilterChainManager);
     }
 
-    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
+/*    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
         FilterChainManager filterChainManager = getFilterChainManager();
         if (!filterChainManager.hasChains()) {
             return null;
@@ -47,5 +47,26 @@ public class CustomPathMatchingFilterChainResolver extends PathMatchingFilterCha
         }
 
         return customDefaultFilterChainManager.proxy(originalChain, chainNames);
+    }*/
+
+    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
+        FilterChainManager filterChainManager = getFilterChainManager();
+        if (!filterChainManager.hasChains()) {
+            return null;
+        }
+
+        String requestURI = getPathWithinApplication(request);
+
+        //the 'chain names' in this implementation are actually path patterns defined by the user.  We just use them
+        //as the chain name for the FilterChainManager's requirements
+        for (String pathPattern : filterChainManager.getChainNames()) {
+
+            // If the path does match, then pass on to the subclass implementation for specific checks:
+            if (pathMatches(pathPattern, requestURI)) {
+                return customDefaultFilterChainManager.proxy(originalChain, pathPattern);
+            }
+        }
+        return null;
+
     }
 }
