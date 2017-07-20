@@ -1,5 +1,6 @@
 package org.seckill.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.seckill.entity.Organization;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface OrganizationDao {
 
     List<Organization> findAllWithExclude(Organization excludeOraganization);
 
-    void move(Organization source, Organization target);
+    void move(@Param("source") Organization source, @Param("target") Organization target);
 }
