@@ -25,7 +25,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationDao.createOrganization(organization);
     }
 
-    @SysLogAnnotation(moduleName="组织机构管理",option="修改组织机构")
+    @SysLogAnnotation(moduleName="组织机构管理",option="更新组织机构")
     @Override
     public Integer updateOrganization(Organization organization) {
         return organizationDao.updateOrganization(organization);
