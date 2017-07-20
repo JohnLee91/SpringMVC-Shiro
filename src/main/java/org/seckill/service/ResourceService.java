@@ -13,8 +13,8 @@ import java.util.Set;
 public interface ResourceService {
 
 
-    public int createResource(Resource resource);
-    public int updateResource(Resource resource);
+    public Integer createResource(Resource resource);
+    public Integer updateResource(Resource resource);
     public Resource deleteResource(Long resourceId);
 
     Resource selectById(Long resourceId);

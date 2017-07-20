@@ -30,14 +30,15 @@ public class ResourceServiceImpl implements ResourceService {
 
     @SysLogAnnotation(moduleName="资源管理",option="创建资源")
     @Override
-    public int createResource(Resource resource) {
+    public Integer createResource(Resource resource) {
         return resourceDao.createResource(resource);
     }
 
     @SysLogAnnotation(moduleName="资源管理",option="更新资源")
     @Override
-    public int updateResource(Resource resource) {
+    public Integer updateResource(Resource resource) {
         userRealm.clearAllCache();
+
         return resourceDao.updateResource(resource);
     }
 
