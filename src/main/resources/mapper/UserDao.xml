@@ -20,7 +20,7 @@
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
     <insert id="createUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         <!-- 具体sql -->
-        INSERT INTO sys_user(organization_id, username, password, salt, role_ids, locke, available) values
+        INSERT INTO sys_user(organization_id, username, password, salt, role_ids, locked, available) values
         (#{organizationId}, #{username}, #{password}, #{salt}, #{roleIdsStr}, #{locked}, #{available})
     </insert>
 
