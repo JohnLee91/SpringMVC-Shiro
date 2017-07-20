@@ -1,5 +1,6 @@
 package org.seckill.service.impl;
 
+import org.seckill.aspect.SysLogAnnotation;
 import org.seckill.dao.RoleDao;
 import org.seckill.entity.Role;
 import org.seckill.realm.UserRealm;
@@ -28,20 +29,27 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private UserRealm userRealm;
 
-    public int createRole(Role role) {
+    @SysLogAnnotation(moduleName="角色管理",option="创建角色")
+    @Override
+    public Integer createRole(Role role) {
         return roleDao.createRole(role);
     }
 
-    public int updateRole(Role role) {
+    @SysLogAnnotation(moduleName="角色管理",option="更新角色")
+    @Override
+    public Integer updateRole(Role role) {
         userRealm.clearAllCache();
         return roleDao.updateRole(role);
     }
 
-    public int deleteRole(Long roleId) {
+    @SysLogAnnotation(moduleName="角色管理",option="删除角色")
+    @Override
+    public Role deleteRole(Long roleId) {
         Role role = this.selectById(roleId);
         role.setAvailable(0);
+        this.updateRole(role);
 
-        return this.updateRole(role);
+        return role;
     }
 
     @Override

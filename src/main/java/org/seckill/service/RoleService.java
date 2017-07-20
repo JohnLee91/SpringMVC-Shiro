@@ -13,9 +13,9 @@ import java.util.Set;
 public interface RoleService {
 
 
-    public int createRole(Role role);
-    public int updateRole(Role role);
-    public int deleteRole(Long roleId);
+    public Integer createRole(Role role);
+    public Integer updateRole(Role role);
+    public Role deleteRole(Long roleId);
 
     public Role selectById(Long roleId);
     public List<Role> findAll();
