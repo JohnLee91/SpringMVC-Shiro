@@ -1,6 +1,11 @@
 package org.seckill.entity;
 
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>User: Zhang Kaitao
@@ -12,6 +17,7 @@ public class UrlFilter implements Serializable {
     private String name; //url名称/描述
     private String url; //地址
     private String roles; //所需要的角色，可省略
+    private List<String> rolesList; //用于前端下拉列表显示已拥有的角色时默认选中
     private String permissions; //所需要的权限，可省略
     private Integer available = 1;
 
@@ -45,6 +51,44 @@ public class UrlFilter implements Serializable {
 
     public void setRoles(String roles) {
         this.roles = roles;
+        setRolesListFormRoles();
+    }
+
+    public List<String> getRolesList() {
+        if(rolesList == null) {
+            rolesList = new ArrayList<String>();
+        }
+        return rolesList;
+    }
+
+    public void setRolesList(List<String> rolesList) {
+        this.rolesList = rolesList;
+        setRolesFormRolesList();
+    }
+
+    public void setRolesListFormRoles(){
+        if(!StringUtils.isEmpty(roles)) {
+            String[] roleStrs = roles.split(",");
+            for (String roleStr : roleStrs) {
+                if (StringUtils.isEmpty(roleStr)) {
+                    continue;
+                }
+                getRolesList().add(String.valueOf(roleStr));
+            }
+        }
+    }
+
+    public void setRolesFormRolesList(){
+        if(!CollectionUtils.isEmpty(rolesList)) {
+            StringBuilder s = new StringBuilder();
+            for (String role : rolesList) {
+                s.append(role);
+                s.append(",");
+            }
+
+            s.deleteCharAt(s.length()-1);
+            this.roles = s.toString();
+        }
     }
 
     public String getPermissions() {

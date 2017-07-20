@@ -1,14 +1,19 @@
 package org.seckill.controller;
 
 import org.seckill.entity.UrlFilter;
+import org.seckill.service.RoleService;
 import org.seckill.service.UrlFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>User: Zhang Kaitao
@@ -22,6 +27,9 @@ public class UrlFilterController {
     @Autowired
     private UrlFilterService urlFilterService;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("urlFilterList", urlFilterService.findAll());
@@ -30,6 +38,7 @@ public class UrlFilterController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String showCreateForm(Model model) {
+        setCommonData(model);
         model.addAttribute("urlFilter", new UrlFilter());
         model.addAttribute("op", "新增");
         return "urlFilter/edit";
@@ -44,6 +53,7 @@ public class UrlFilterController {
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        setCommonData(model);
         model.addAttribute("urlFilter", urlFilterService.selectById(id));
         model.addAttribute("op", "修改");
         return "urlFilter/edit";
@@ -68,6 +78,10 @@ public class UrlFilterController {
         urlFilterService.deleteUrlFilter(id);
         redirectAttributes.addFlashAttribute("msg", "删除成功");
         return "redirect:/urlFilter";
+    }
+
+    private void setCommonData(Model model) {
+        model.addAttribute("roleList", roleService.findAll());
     }
 
 }

@@ -28,8 +28,9 @@
         </div>
 
         <div class="form-group">
-            <form:label path="roles">角色列表：</form:label>
-            <form:input path="roles"/>
+            <form:label path="rolesList">角色列表：</form:label>
+            <form:select path="rolesList" items="${roleList}" itemLabel="description" itemValue="role" multiple="true"/>
+            (按住shift键多选)
         </div>
 
         <div class="form-group">
@@ -40,6 +41,5 @@
         <form:button>${op}</form:button>
 
     </form:form>
-
 </body>
 </html>
