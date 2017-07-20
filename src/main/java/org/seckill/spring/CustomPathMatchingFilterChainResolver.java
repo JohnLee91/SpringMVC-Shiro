@@ -23,7 +23,7 @@ public class CustomPathMatchingFilterChainResolver extends PathMatchingFilterCha
         setFilterChainManager(customDefaultFilterChainManager);
     }
 
-/*    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
+    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
         FilterChainManager filterChainManager = getFilterChainManager();
         if (!filterChainManager.hasChains()) {
             return null;
@@ -47,9 +47,9 @@ public class CustomPathMatchingFilterChainResolver extends PathMatchingFilterCha
         }
 
         return customDefaultFilterChainManager.proxy(originalChain, chainNames);
-    }*/
+    }
 
-    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
+/*    public FilterChain getChain(ServletRequest request, ServletResponse response, FilterChain originalChain) {
         FilterChainManager filterChainManager = getFilterChainManager();
         if (!filterChainManager.hasChains()) {
             return null;
@@ -68,5 +68,5 @@ public class CustomPathMatchingFilterChainResolver extends PathMatchingFilterCha
         }
         return null;
 
-    }
+    }*/
 }

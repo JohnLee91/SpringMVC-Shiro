@@ -134,11 +134,15 @@
         </property>
         <property name="defaultFilterChainDefinitions">
             <value>
+                /resource = anon
                 /jcaptcha* = anon
+                <!--/login = authc-->
                 /login = jCaptchaValidate,authc
+                / = authc
                 /logout = logout
                 /unauthorized = authc
-                /** = user,sysUser
+                /admin/** = user
+                /** = sysUser
             </value>
         </property>
     </bean>
