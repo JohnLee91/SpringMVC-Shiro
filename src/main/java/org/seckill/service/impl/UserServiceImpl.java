@@ -1,5 +1,6 @@
 package org.seckill.service.impl;
 
+import org.seckill.aspect.SysLogAnnotation;
 import org.seckill.dao.UserDao;
 import org.seckill.entity.User;
 import org.seckill.realm.UserRealm;
@@ -35,25 +36,30 @@ public class UserServiceImpl implements UserService {
      * 创建用户
      * @param user
      */
-    public int createUser(User user) {
+    @SysLogAnnotation(moduleName="用户管理",option="创建用户")
+    @Override
+    public Integer createUser(User user) {
         //加密密码
         passwordHelper.encryptPassword(user);
         return userDao.createUser(user);
     }
 
+    @SysLogAnnotation(moduleName="用户管理",option="更新用户")
     @Override
-    public int updateUser(User user) {
+    public Integer updateUser(User user) {
         userRealm.clearAllCache();
         return userDao.updateUser(user);
     }
 
+    @SysLogAnnotation(moduleName="用户管理",option="删除用户")
     @Override
-    public int deleteUser(Long userId) {
+    public User deleteUser(Long userId) {
         userRealm.clearAllCache();
         User user = this.selectById(userId);
         user.setAvailable(0);
+        this.updateUser(user);
 
-        return this.updateUser(user);
+        return user;
     }
 
     /**
@@ -61,11 +67,15 @@ public class UserServiceImpl implements UserService {
      * @param userId
      * @param newPassword
      */
-    public void changePassword(Long userId, String newPassword) {
+    @SysLogAnnotation(moduleName="用户管理",option="修改密码")
+    @Override
+    public User changePassword(Long userId, String newPassword) {
         User user =userDao.selectById(userId);
         user.setPassword(newPassword);
         passwordHelper.encryptPassword(user);
         userDao.updateUser(user);
+
+        return user;
     }
 
     @Override

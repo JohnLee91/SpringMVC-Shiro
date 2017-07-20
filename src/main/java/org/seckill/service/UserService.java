@@ -16,18 +16,18 @@ public interface UserService {
      * 创建用户
      * @param user
      */
-    public int createUser(User user);
+    public Integer createUser(User user);
 
-    public int updateUser(User user);
+    public Integer updateUser(User user);
 
-    public int deleteUser(Long userId);
+    public User deleteUser(Long userId);
 
     /**
      * 修改密码
      * @param userId
      * @param newPassword
      */
-    public void changePassword(Long userId, String newPassword);
+    public User changePassword(Long userId, String newPassword);
 
 
     User selectById(Long userId);
