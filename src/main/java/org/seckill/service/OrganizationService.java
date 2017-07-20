@@ -12,9 +12,9 @@ import java.util.List;
 public interface OrganizationService {
 
 
-    public int createOrganization(Organization organization);
-    public int updateOrganization(Organization organization);
-    public int deleteOrganization(Long organizationId);
+    public Integer createOrganization(Organization organization);
+    public Integer updateOrganization(Organization organization);
+    public Organization deleteOrganization(Long organizationId);
 
     Organization selectById(Long organizationId);
     List<Organization> findAll();

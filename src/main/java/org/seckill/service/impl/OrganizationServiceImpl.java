@@ -1,5 +1,6 @@
 package org.seckill.service.impl;
 
+import org.seckill.aspect.SysLogAnnotation;
 import org.seckill.dao.OrganizationDao;
 import org.seckill.entity.Organization;
 import org.seckill.service.OrganizationService;
@@ -18,22 +19,26 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private OrganizationDao organizationDao;
 
+    @SysLogAnnotation(moduleName="组织机构管理",option="创建组织机构")
     @Override
-    public int createOrganization(Organization organization) {
+    public Integer createOrganization(Organization organization) {
         return organizationDao.createOrganization(organization);
     }
 
+    @SysLogAnnotation(moduleName="组织机构管理",option="修改组织机构")
     @Override
-    public int updateOrganization(Organization organization) {
+    public Integer updateOrganization(Organization organization) {
         return organizationDao.updateOrganization(organization);
     }
 
+    @SysLogAnnotation(moduleName="组织机构管理",option="删除组织机构")
     @Override
-    public int deleteOrganization(Long organizationId) {
+    public Organization deleteOrganization(Long organizationId) {
         Organization organization = this.selectById(organizationId);
         organization.setAvailable(0);
+        this.updateOrganization(organization);
 
-        return this.updateOrganization(organization);
+        return organization;
     }
 
     @Override
