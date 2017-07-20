@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface UrlFilterService {
 
-    public int createUrlFilter(UrlFilter urlFilter);
-    public int updateUrlFilter(UrlFilter urlFilter);
-    public int deleteUrlFilter(Long urlFilterId);
+    public Integer createUrlFilter(UrlFilter urlFilter);
+    public Integer updateUrlFilter(UrlFilter urlFilter);
+    public UrlFilter deleteUrlFilter(Long urlFilterId);
 
     public UrlFilter selectById(Long urlFilterId);
     public List<UrlFilter> findAll();

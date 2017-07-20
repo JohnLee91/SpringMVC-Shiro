@@ -1,5 +1,6 @@
 package org.seckill.service.impl;
 
+import org.seckill.aspect.SysLogAnnotation;
 import org.seckill.dao.UrlFilterDao;
 import org.seckill.entity.UrlFilter;
 import org.seckill.realm.UserRealm;
@@ -28,31 +29,32 @@ public class UrlFilterServiceImpl implements UrlFilterService {
     @Autowired
     private UserRealm userRealm;
 
+    @SysLogAnnotation(moduleName="URL过滤管理",option="创建URL过滤")
     @Override
-    public int createUrlFilter(UrlFilter urlFilter) {
+    public Integer createUrlFilter(UrlFilter urlFilter) {
         int result = urlFilterDao.createUrlFilter(urlFilter);
         initFilterChain();
         return result;
     }
 
-
-
+    @SysLogAnnotation(moduleName="URL过滤管理",option="更新URL过滤")
     @Override
-    public int updateUrlFilter(UrlFilter urlFilter) {
+    public Integer updateUrlFilter(UrlFilter urlFilter) {
         int result = urlFilterDao.updateUrlFilter(urlFilter);
         userRealm.clearAllCache();
         initFilterChain();
         return result;
     }
 
+    @SysLogAnnotation(moduleName="URL过滤管理",option="删除URL过滤")
     @Override
-    public int deleteUrlFilter(Long urlFilterId) {
+    public UrlFilter deleteUrlFilter(Long urlFilterId) {
         UrlFilter urlFilter = this.selectById(urlFilterId);
         urlFilter.setAvailable(0);
-        int result = this.updateUrlFilter(urlFilter);
+        this.updateUrlFilter(urlFilter);
         initFilterChain();
 
-        return result;
+        return urlFilter;
     }
 
     @Override
