@@ -14,7 +14,7 @@
 </c:if>
 
 <shiro:hasPermission name="urlFilter:create">
-    <a href="${pageContext.request.contextPath}/urlFilter/create">URL新增</a><br/>
+    <a href="${pageContext.request.contextPath}/admin/urlFilter/create">URL新增</a><br/>
 </shiro:hasPermission>
 <table class="table">
     <thead>
@@ -35,11 +35,11 @@
                 <td>${urlFilter.permissions}</td>
                 <td>
                     <shiro:hasPermission name="urlFilter:update">
-                        <a href="${pageContext.request.contextPath}/urlFilter/${urlFilter.id}/update">修改</a>
+                        <a href="${pageContext.request.contextPath}/admin/urlFilter/${urlFilter.id}/update">修改</a>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="urlFilter:delete">
-                        <a href="${pageContext.request.contextPath}/urlFilter/${urlFilter.id}/delete">删除</a>
+                        <a href="${pageContext.request.contextPath}/admin/urlFilter/${urlFilter.id}/delete">删除</a>
                     </shiro:hasPermission>
                 </td>
             </tr>

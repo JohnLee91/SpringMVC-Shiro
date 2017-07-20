@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * <p>Version: 1.0
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class UserController {
     public String create(User user, RedirectAttributes redirectAttributes) {
         userService.createUser(user);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
     @RequiresPermissions("user:update")
@@ -68,7 +68,7 @@ public class UserController {
     public String update(User user, RedirectAttributes redirectAttributes) {
         userService.updateUser(user);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
     @RequiresPermissions("user:delete")
@@ -85,7 +85,7 @@ public class UserController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         userService.deleteUser(id);
         redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
 
@@ -102,7 +102,7 @@ public class UserController {
     public String changePassword(@PathVariable("id") Long id, String newPassword, RedirectAttributes redirectAttributes) {
         userService.changePassword(id, newPassword);
         redirectAttributes.addFlashAttribute("msg", "修改密码成功");
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
     private void setCommonData(Model model) {

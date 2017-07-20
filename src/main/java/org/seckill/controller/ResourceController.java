@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * <p>Version: 1.0
  */
 @Controller
-@RequestMapping("/resource")
+@RequestMapping("/admin/resource")
 public class ResourceController {
 
     @Autowired
@@ -55,7 +55,7 @@ public class ResourceController {
     public String create(Resource resource, RedirectAttributes redirectAttributes) {
         resourceService.createResource(resource);
         redirectAttributes.addFlashAttribute("msg", "新增子节点成功");
-        return "redirect:/resource";
+        return "redirect:/admin/resource";
     }
 
     @RequiresPermissions("resource:update")
@@ -71,7 +71,7 @@ public class ResourceController {
     public String update(Resource resource, RedirectAttributes redirectAttributes) {
         resourceService.updateResource(resource);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/resource";
+        return "redirect:/admin/resource";
     }
 
     @RequiresPermissions("resource:delete")
@@ -79,7 +79,7 @@ public class ResourceController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         resourceService.deleteResource(id);
         redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/resource";
+        return "redirect:/admin/resource";
     }
 
 

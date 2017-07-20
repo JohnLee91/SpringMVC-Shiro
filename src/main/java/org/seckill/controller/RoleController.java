@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * <p>Version: 1.0
  */
 @Controller
-@RequestMapping("/role")
+@RequestMapping("/admin/role")
 public class RoleController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class RoleController {
     public String create(Role role, RedirectAttributes redirectAttributes) {
         roleService.createRole(role);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
-        return "redirect:/role";
+        return "redirect:/admin/role";
     }
 
     @RequiresPermissions("role:update")
@@ -65,7 +65,7 @@ public class RoleController {
     public String update(Role role, RedirectAttributes redirectAttributes) {
         roleService.updateRole(role);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/role";
+        return "redirect:/admin/role";
     }
 
     @RequiresPermissions("role:delete")
@@ -82,7 +82,7 @@ public class RoleController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         roleService.deleteRole(id);
         redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/role";
+        return "redirect:/admin/role";
     }
 
     private void setCommonData(Model model) {

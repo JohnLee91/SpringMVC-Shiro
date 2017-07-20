@@ -14,7 +14,7 @@
 </c:if>
 
 <shiro:hasPermission name="user:create">
-    <a href="${pageContext.request.contextPath}/user/create">用户新增</a><br/>
+    <a href="${pageContext.request.contextPath}/admin/user/create">用户新增</a><br/>
 </shiro:hasPermission>
 
 <table class="table">
@@ -34,15 +34,15 @@
                 <td>${zhangfn:roleNames(user.roleIds)}</td>
                 <td>
                     <shiro:hasPermission name="user:update">
-                        <a href="${pageContext.request.contextPath}/user/${user.id}/update">修改</a>
+                        <a href="${pageContext.request.contextPath}/admin/user/${user.id}/update">修改</a>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="user:delete">
-                        <a href="${pageContext.request.contextPath}/user/${user.id}/delete">删除</a>
+                        <a href="${pageContext.request.contextPath}/admin/user/${user.id}/delete">删除</a>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="user:update">
-                        <a href="${pageContext.request.contextPath}/user/${user.id}/changePassword">改密</a>
+                        <a href="${pageContext.request.contextPath}/admin/user/${user.id}/changePassword">改密</a>
                     </shiro:hasPermission>
                 </td>
             </tr>

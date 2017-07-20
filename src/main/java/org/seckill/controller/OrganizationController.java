@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * <p>Version: 1.0
  */
 @Controller
-@RequestMapping("/organization")
+@RequestMapping("/admin/organization")
 public class OrganizationController {
 
     @Autowired
@@ -54,7 +54,7 @@ public class OrganizationController {
     @RequestMapping(value = "/{parentId}/appendChild", method = RequestMethod.POST)
     public String create(Organization organization) {
         organizationService.createOrganization(organization);
-        return "redirect:/organization/success";
+        return "redirect:/admin/organization/success";
     }
 
     @RequiresPermissions("organization:update")
@@ -69,7 +69,7 @@ public class OrganizationController {
     public String update(Organization organization, RedirectAttributes redirectAttributes) {
         organizationService.updateOrganization(organization);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/organization/success";
+        return "redirect:/admin/organization/success";
     }
 
     @RequiresPermissions("organization:delete")
@@ -77,7 +77,7 @@ public class OrganizationController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         organizationService.deleteOrganization(id);
         redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/organization/success";
+        return "redirect:/admin/organization/success";
     }
 
 
@@ -98,7 +98,7 @@ public class OrganizationController {
         Organization source = organizationService.selectById(sourceId);
         Organization target = organizationService.selectById(targetId);
         organizationService.move(source, target);
-        return "redirect:/organization/success";
+        return "redirect:/admin/organization/success";
     }
 
     @RequiresPermissions("organization:view")

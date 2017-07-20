@@ -10,7 +10,7 @@
         src="" frameborder="0" scrolling="auto"></iframe>
 
 <iframe name="tree" class="ui-layout-west"
-        src="${pageContext.request.contextPath}/organization/tree" frameborder="0" scrolling="auto"></iframe>
+        src="${pageContext.request.contextPath}/admin/organization/tree" frameborder="0" scrolling="auto"></iframe>
 
 <script src="${pageContext.request.contextPath}/resources/static/js/jquery-1.11.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/static/js/jquery.layout-latest.min.js"></script>

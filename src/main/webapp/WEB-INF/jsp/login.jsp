@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@include file="./common/tag.jsp"%>
 <html>
 <head>
@@ -45,7 +44,7 @@
     $(function() {
         $(".jcaptcha-btn").click(function() {
             //+new Date().getTime());
-            $(".jcaptcha-img").attr("src", '${pageContext.request.contextPath}/jcaptcha.jpg');
+            $(".jcaptcha-img").attr("src", '${pageContext.request.contextPath}/jcaptcha.jpg?'+new Date().getTime());
         });
     });
 </script>

@@ -45,26 +45,26 @@
         $(function() {
             $("#updateBtn").click(function() {
                 $("#form")
-                        .attr("action", "${pageContext.request.contextPath}/organization/${organization.id}/update")
+                        .attr("action", "${pageContext.request.contextPath}/admin/organization/${organization.id}/update")
                         .submit();
                 return false;
             });
             $("#deleteBtn").click(function() {
                 if(confirm("确认删除吗？")) {
                     $("#form")
-                            .attr("action", "${pageContext.request.contextPath}/organization/${organization.id}/delete")
+                            .attr("action", "${pageContext.request.contextPath}/admin/organization/${organization.id}/delete")
                             .submit();
                 }
                 return false;
             });
 
             $("#appendChildBtn").click(function() {
-                location.href="${pageContext.request.contextPath}/organization/${organization.id}/appendChild";
+                location.href="${pageContext.request.contextPath}/admin/organization/${organization.id}/appendChild";
                 return false;
             });
 
             $("#moveBtn").click(function() {
-                location.href="${pageContext.request.contextPath}/organization/${organization.id}/move";
+                location.href="${pageContext.request.contextPath}/admin/organization/${organization.id}/move";
                 return false;
             });
         });

@@ -43,12 +43,12 @@
                 <td>
                     <shiro:hasPermission name="resource:create">
                         <c:if test="${resource.type ne 'button'}">
-                        <a href="${pageContext.request.contextPath}/resource/${resource.id}/appendChild">添加子节点</a>
+                        <a href="${pageContext.request.contextPath}/admin/resource/${resource.id}/appendChild">添加子节点</a>
                         </c:if>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="resource:update">
-                        <a href="${pageContext.request.contextPath}/resource/${resource.id}/update">修改</a>
+                        <a href="${pageContext.request.contextPath}/admin/resource/${resource.id}/update">修改</a>
                     </shiro:hasPermission>
                     <c:if test="${not resource.rootNode}">
 
@@ -70,7 +70,7 @@
         $("#table").treetable({ expandable: true }).treetable("expandNode", 1);
         $(".deleteBtn").click(function() {
             if(confirm("确认删除吗?")) {
-                location.href = "${pageContext.request.contextPath}/resource/"+$(this).data("id")+"/delete";
+                location.href = "${pageContext.request.contextPath}/admin/resource/"+$(this).data("id")+"/delete";
             }
         });
     });

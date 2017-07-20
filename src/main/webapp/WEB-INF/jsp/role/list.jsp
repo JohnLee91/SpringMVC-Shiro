@@ -14,7 +14,7 @@
 </c:if>
 
 <shiro:hasPermission name="role:create">
-    <a href="${pageContext.request.contextPath}/role/create">角色新增</a><br/>
+    <a href="${pageContext.request.contextPath}/admin/role/create">角色新增</a><br/>
 </shiro:hasPermission>
 <table class="table">
     <thead>
@@ -33,11 +33,11 @@
                 <td>${zhangfn:resourceNames(role.resourceIds)}</td>
                 <td>
                     <shiro:hasPermission name="role:update">
-                        <a href="${pageContext.request.contextPath}/role/${role.id}/update">修改</a>
+                        <a href="${pageContext.request.contextPath}/admin/role/${role.id}/update">修改</a>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="role:delete">
-                        <a href="${pageContext.request.contextPath}/role/${role.id}/delete">删除</a>
+                        <a href="${pageContext.request.contextPath}/admin/role/${role.id}/delete">删除</a>
                     </shiro:hasPermission>
                 </td>
             </tr>

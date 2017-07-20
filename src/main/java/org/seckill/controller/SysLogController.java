@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * <p>Version: 1.0
  */
 @Controller
-@RequestMapping("/sysLog")
+@RequestMapping("/admin/sysLog")
 public class SysLogController {
 
     @Autowired
@@ -51,11 +51,11 @@ public class SysLogController {
     @RequestMapping(value = "/{sysLogId}/detail", method = RequestMethod.GET)
     public String detail(@PathVariable("sysLogId") Long sysLogId, Model model) {
         if (sysLogId == null) {
-            return "redirect:/sysLog/list";
+            return "redirect:/admin/sysLog/list";
         }
         SysLog sysLog = sysLogService.selectById(sysLogId);
         if (sysLog == null) {
-            return "forward:/sysLog/list";
+            return "forward:/admin/sysLog/list";
         }
         model.addAttribute("sysLog", sysLog);
 

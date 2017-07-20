@@ -21,7 +21,7 @@ import java.util.List;
  * <p>Version: 1.0
  */
 @Controller
-@RequestMapping("/urlFilter")
+@RequestMapping("/admin/urlFilter")
 public class UrlFilterController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class UrlFilterController {
     public String create(UrlFilter urlFilter, RedirectAttributes redirectAttributes) {
         urlFilterService.createUrlFilter(urlFilter);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
-        return "redirect:/urlFilter";
+        return "redirect:/admin/urlFilter";
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
@@ -63,11 +63,12 @@ public class UrlFilterController {
     public String update(UrlFilter urlFilter, RedirectAttributes redirectAttributes) {
         urlFilterService.updateUrlFilter(urlFilter);
         redirectAttributes.addFlashAttribute("msg", "修改成功");
-        return "redirect:/urlFilter";
+        return "redirect:/admin/urlFilter";
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public String showDeleteForm(@PathVariable("id") Long id, Model model) {
+        setCommonData(model);
         model.addAttribute("urlFilter", urlFilterService.selectById(id));
         model.addAttribute("op", "删除");
         return "urlFilter/edit";
@@ -77,7 +78,7 @@ public class UrlFilterController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         urlFilterService.deleteUrlFilter(id);
         redirectAttributes.addFlashAttribute("msg", "删除成功");
-        return "redirect:/urlFilter";
+        return "redirect:/admin/urlFilter";
     }
 
     private void setCommonData(Model model) {

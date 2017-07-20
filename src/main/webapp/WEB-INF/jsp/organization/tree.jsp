@@ -20,7 +20,7 @@
             },
             callback : {
                 onClick : function(event, treeId, treeNode) {
-                    parent.frames['content'].location.href = "${pageContext.request.contextPath}/organization/"+treeNode.id+"/maintain";
+                    parent.frames['content'].location.href = "${pageContext.request.contextPath}/admin/organization/"+treeNode.id+"/maintain";
                 }
             }
         };

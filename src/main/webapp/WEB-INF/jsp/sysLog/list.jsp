@@ -52,7 +52,7 @@
    								</td>
    								<td>
 									<shiro:hasPermission name="sysLog:view">
-   										<a class="btn btn-info" href="sysLog/${log.id}/detail" target="_self">详情</a>
+   										<a class="btn btn-info" href="admin/sysLog/${log.id}/detail" target="_self">详情</a>
 									</shiro:hasPermission>
    								</td>
    							</tr>
