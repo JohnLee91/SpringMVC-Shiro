@@ -21,5 +21,6 @@ public interface OrganizationDao {
 
     List<Organization> findAllWithExclude(Organization excludeOraganization);
 
-    void move(@Param("source") Organization source, @Param("target") Organization target);
+    void moveFirst(@Param("source") Organization source, @Param("target") Organization target);
+    void moveSecond(@Param("source") Organization source, @Param("target") Organization target);
 }

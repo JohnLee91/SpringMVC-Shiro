@@ -55,9 +55,11 @@
         <!--ORDER BY id DESC-->
     <!--</select>-->
 
-    <update id="move" parameterType="Organization" >
+    <update id="moveFirst" parameterType="Organization" >
         UPDATE sys_organization SET parent_id=#{target.id}, parent_ids=#{target.parentIds}
-        WHERE id=#{source.id};
+        WHERE id=#{source.id}
+    </update>
+    <update id="moveSecond" parameterType="Organization" >
         UPDATE sys_organization SET parent_ids=CONCAT(CONCAT(#{target.parentIds}, #{target.id},'/'),substring(parent_ids,LENGTH(CONCAT(#{source.parentIds}, #{source.id}, '/'))))
         WHERE parent_ids LIKE CONCAT(#{source.parentIds}, #{source.id}, '/%')
     </update>

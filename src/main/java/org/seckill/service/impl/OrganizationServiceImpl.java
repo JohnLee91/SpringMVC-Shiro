@@ -6,6 +6,7 @@ import org.seckill.entity.Organization;
 import org.seckill.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -56,8 +57,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         return organizationDao.findAllWithExclude(excludeOraganization);
     }
 
+    @Transactional
     @Override
     public void move(Organization source, Organization target) {
-        organizationDao.move(source, target);
+        organizationDao.moveFirst(source, target);
+        organizationDao.moveSecond(source, target);
     }
 }
